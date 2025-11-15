@@ -2,9 +2,10 @@ from __future__ import annotations
 
 from typing import Any, List, Mapping, cast
 
+
 import pytest
 
-from samsungtv import (
+from pysamsungtv import (
     ArtMode,
     InputSource,
     MuteState,
