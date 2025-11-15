@@ -7,10 +7,9 @@ venv := ".venv"
 
 install:
     uv venv {{venv}}
-    source {{venv}}/bin/activate && uv pip install -e .
+    source {{venv}}/bin/activate && uv sync --extra tests
 
 install-tests: install
-    source {{venv}}/bin/activate && uv pip install -e .[tests]
 
 mypy:
     source {{venv}}/bin/activate && mypy .

@@ -6,7 +6,7 @@ from typing import Optional
 
 import pytest
 
-from samsungtv import SamsungTVClient, SamsungTVResponseError
+from pysamsungtv import SamsungTVClient, SamsungTVResponseError
 
 HOST = os.getenv("SAMSUNG_TV_HOST")
 TOKEN_ENV = os.getenv("SAMSUNG_TV_TOKEN") or ""
@@ -40,9 +40,11 @@ async def test_get_tv_states_live() -> None:
     if not HOST:
         pytest.skip("Set SAMSUNG_TV_HOST to run live tests")
 
+    host: str = HOST
+
     token: Optional[str] = TOKEN_ENV.strip() or _load_cached_token()
 
-    async with SamsungTVClient(HOST, access_token=token, port=PORT) as tv:
+    async with SamsungTVClient(host, access_token=token, port=PORT) as tv:
         if token is None:
             token = await tv.create_access_token()
             _store_token(token)

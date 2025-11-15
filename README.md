@@ -1,6 +1,6 @@
-# py-samsungtv
+# pysamsungtv
 
-`py-samsungtv` is an async Python library that talks to Samsung TVs over HTTPS JSON-RPC.
+`pysamsungtv` is an async Python library that talks to Samsung TVs over HTTPS JSON-RPC.
 
 ## Why
 
@@ -12,7 +12,7 @@ I got frustrated enough to do a clean-room implemenation of it here.
 
 ```bash
 # pypi
-pip install py-samsungtv
+pip install pysamsungtv
 
 # local dev
 just install
@@ -35,5 +35,5 @@ The optional `on_update` callback is invoked sequentially after every response. 
 - Run the test suite with `pytest`. Unit tests use fully mocked transports.
 - Integration tests require a real TV: set `SAMSUNG_TV_HOST` (plus optional `SAMSUNG_TV_PORT` and/or `SAMSUNG_TV_TOKEN`) and run `pytest -m integration`. If no token is supplied the first run will prompt for authorization and cache the returned token under `.pytest_cache/samsung_tv_token` for later runs.
 - A `Justfile` is included for convenience: `just install`, `just install-tests`, `just test`, `just mypy`, etc.
-- All command inputs are exposed as enums in `samsungtv.enums` (also re-exported at the package root) so you can rely on autocomplete/validation for things like `InputSource`, `PictureMode`, `SoundMode`, and `RemoteKey`.
+- All command inputs are exposed as enums in `pysamsungtv.enums` (also re-exported at the package root) so you can rely on autocomplete/validation for things like `InputSource`, `PictureMode`, `SoundMode`, and `RemoteKey`.
 - Convenience helpers such as `set_picture_mode`, `set_sound_mode`, `select_speaker`, `select_input_source`, `set_volume`, `mute()/unmute()`, and `art_mode_on()/art_mode_off()` call the corresponding `*_control` RPCs for you.

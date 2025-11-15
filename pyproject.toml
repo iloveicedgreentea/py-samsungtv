@@ -12,10 +12,14 @@ requires-python = ">=3.11"
 dependencies = ["aiohttp>=3.9"]
 
 [project.optional-dependencies]
-tests = ["pytest>=8.3", "pytest-asyncio>=0.23"]
+tests = [
+    "pytest>=8.3",
+    "pytest-asyncio>=0.23",
+    "pytest-mypy-plugins",
+]
 
 [tool.setuptools.package-data]
-samsungtv = ["py.typed"]
+pysamsungtv = ["py.typed"]
 
 [tool.mypy]
 python_version = "3.12"
