@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "py-samsungtv"
-version = "1.0.0"
+version = "1.0.2"
 description = "Async Samsung 2024+ TV control via the HTTPS JSON-RPC interface"
 readme = "README.md"
 authors = [{ name = "@iloveicedgreentea" }]
@@ -12,11 +12,7 @@ requires-python = ">=3.11"
 dependencies = ["aiohttp>=3.9"]
 
 [project.optional-dependencies]
-tests = [
-    "pytest>=8.3",
-    "pytest-asyncio>=0.23",
-    "pytest-mypy-plugins",
-]
+tests = ["pytest>=8.3", "pytest-asyncio>=0.23", "pytest-mypy-plugins"]
 
 [tool.setuptools.package-data]
 pysamsungtv = ["py.typed"]
