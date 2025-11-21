@@ -27,8 +27,13 @@ from .enums import (
 )
 from .exceptions import (
     SamsungTVAuthenticationError,
+    SamsungTVFailedError,
+    SamsungTVInvalidOperationError,
+    SamsungTVNotSupportedError,
     SamsungTVProtocolError,
     SamsungTVResponseError,
+    SamsungTVUnauthorizedError,
+    SamsungTVUnknownError,
 )
 from .types import (
     DeviceInfo,
@@ -108,6 +113,8 @@ class SamsungTVClient:
         mapping = self._cast_mapping(result)
         states: dict[str, Any] = {}
         self._assign_enum_field(states, mapping, "power", PowerState)
+        self._assign_enum_field(states, mapping, "pictureSize", PictureSize)
+        self._assign_enum_field(states, mapping, "soundMode", SoundMode)
         self._assign_enum_field(states, mapping, "mute", MuteState)
         self._assign_enum_field(states, mapping, "atvDtv", AtvDtv)
         self._assign_enum_field(states, mapping, "airCable", AirCable)
@@ -389,7 +396,25 @@ class SamsungTVClient:
             payload["params"] = dict(params)
         data = await self._connection.request(payload)
         if isinstance(data, Mapping) and "error" in data:
-            raise SamsungTVResponseError(str(data["error"]))
+            error = data["error"]
+            code = None
+            message = str(error)
+            if isinstance(error, Mapping):
+                code = error.get("code")
+                message = str(error.get("message", message))
+
+            if code == -32000:
+                raise SamsungTVUnknownError(message, code)
+            if code == -32001:
+                raise SamsungTVNotSupportedError(message, code)
+            if code == -32002:
+                raise SamsungTVFailedError(message, code)
+            if code == -32003:
+                raise SamsungTVInvalidOperationError(message, code)
+            if code == -32010:
+                raise SamsungTVUnauthorizedError(message, code)
+
+            raise SamsungTVResponseError(message, code)
         if isinstance(data, Mapping):
             result = cast(JSONValue, data.get("result"))
         else:
